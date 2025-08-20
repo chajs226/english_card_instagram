@@ -477,11 +477,10 @@
         <!-- Card 4: 영어 정답 -->
         <div class="card card4" id="card4">
             <div class="day-header" id="dayHeader4">A Rainy Day in New York 🌧</div>
-            <div class="card-title">정답</div>
+            <div class="card-title">✅ 정답</div>
             <div class="answer-box">
-                <div class="answer-label">✅ 정답:</div>
                 <div class="answer-text" id="englishAnswerText">
-                    <span id="myNameInAnswer">Gatsby</span>: Oh my gosh, that is amazing. How did you land that?
+                    Oh my gosh, that is amazing. How did you land that?
                 </div>
             </div>
         </div>
@@ -597,7 +596,6 @@
 
             if(myName) {
                 document.getElementById('myTitle').textContent = myName;
-                document.getElementById('myNameInAnswer').textContent = myName;
             }
 
             if(koreanResponse) {
@@ -605,8 +603,7 @@
             }
 
             if(englishAnswer) {
-                const answerWithName = englishAnswer.includes(':') ? englishAnswer : `${myName}: ${englishAnswer}`;
-                document.getElementById('englishAnswerText').innerHTML = answerWithName;
+                document.getElementById('englishAnswerText').textContent = englishAnswer;
             }
         }
 
