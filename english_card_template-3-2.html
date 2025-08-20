@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram English Learning Card - Movie Script Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            width: 400px;
+            height: 400px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        /* 카드별 배경색 */
+        .card1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .card3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .card4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+
+        /* 배경 이미지가 있는 모든 카드 */
+        .card.with-background {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        /* 카드 1: 블러 처리 없음 */
+        .card1.with-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            z-index: 1;
+        }
+
+        /* 카드 2,3,4: 블러 처리 적용 */
+        .card2.with-background::after,
+        .card3.with-background::after,
+        .card4.with-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            z-index: 1;
+        }
+
+        .card.with-background .day-header,
+        .card.with-background .card-title,
+        .card.with-background .situation-box,
+        .card.with-background .dialogue-box,
+        .card.with-background .korean-response,
+        .card.with-background .thinking-prompt,
+        .card.with-background .answer-box {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 배경 이미지가 있는 경우 day-header는 절대 위치 유지 */
+        .card.with-background .day-header {
+            position: absolute !important;
+            top: 20px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            z-index: 100 !important;
+            white-space: nowrap !important;
+        }
+
+        .day-header {
+            position: absolute !important;
+            top: 20px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            z-index: 100;
+            width: auto;
+            max-width: 360px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-title {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            z-index: 10;
+            position: relative;
+        }
+
+        .situation-box {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            font-size: 16px;
+            line-height: 1.6;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            position: relative;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .dialogue-box {
+            background: rgba(255,255,255,0.2);
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .english-dialogue {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .korean-translation {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .korean-response {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            z-index: 10;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .thinking-prompt {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            opacity: 0.8;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            position: relative;
+        }
+
+        .answer-box {
+            background: rgba(255,255,255,0.2);
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            position: relative;
+        }
+
+        .answer-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #FFE4B5;
+        }
+
+        .answer-text {
+            font-size: 18px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            max-width: 300px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .export-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .export-btn {
+            background: #28a745;
+            font-size: 12px;
+            padding: 8px;
+        }
+
+        .export-btn:hover {
+            background: #218838;
+        }
+
+        .export-all-btn {
+            background: #dc3545;
+            grid-column: span 2;
+        }
+
+        .export-all-btn:hover {
+            background: #c82333;
+        }
+
+        .caption-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            margin-left: 320px; /* 입력 창 너비(300px) + 여백(20px) */
+            margin-right: 20px;
+        }
+
+        .caption-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .expression-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #007bff;
+        }
+
+        .download-status {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            text-align: center;
+            display: none;
+        }
+
+        .download-status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .download-status.processing {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 1024px) {
+            .controls {
+                position: relative;
+                margin-bottom: 20px;
+                max-width: 100%;
+            }
+            
+            .caption-section {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <div class="control-group">
+            <label>Day 번호:</label>
+            <input type="number" id="dayNumber" value="1" min="1">
+        </div>
+        
+        <div class="control-group">
+            <label>배경 이미지 (카드 1):</label>
+            <input type="file" id="backgroundImage" accept="image/*" onchange="handleImageUpload(event)">
+            <button onclick="removeBackground()" style="margin-top: 5px; background: #dc3545; font-size: 12px; padding: 5px 10px;">배경 제거</button>
+        </div>
+        
+        <div class="control-group">
+            <label>영화 제목:</label>
+            <input type="text" id="movieTitle" value="A Rainy Day in New York" placeholder="영화 제목">
+        </div>
+        
+        <div class="control-group">
+            <label>상황 설명:</label>
+            <textarea id="situationText" placeholder="Ashleigh와 Gatsby가 교정에서 만나다."></textarea>
+        </div>
+        
+        <div class="control-group">
+            <label>상대방 이름:</label>
+            <input type="text" id="opponentName" value="Ashleigh" placeholder="상대방 이름">
+        </div>
+        
+        <div class="control-group">
+            <label>상대방 영어 대사:</label>
+            <textarea id="englishDialogue" placeholder="I got an interview with Roland Pollard."></textarea>
+        </div>
+        
+        <div class="control-group">
+            <label>한글 번역:</label>
+            <textarea id="koreanTranslation" placeholder="Roland Pollard와 인터뷰가 잡혔어"></textarea>
+        </div>
+        
+        <div class="control-group">
+            <label>내 이름:</label>
+            <input type="text" id="myName" value="Gatsby" placeholder="내 이름">
+        </div>
+        
+        <div class="control-group">
+            <label>한글 응답:</label>
+            <textarea id="koreanResponse" placeholder="완전 대박! 어떻게 맡았어?"></textarea>
+        </div>
+        
+        <div class="control-group">
+            <label>영어 정답:</label>
+            <textarea id="englishAnswer" placeholder="Oh my gosh, that is amazing. How did you land that?"></textarea>
+        </div>
+        
+        <button onclick="updateCards()">카드 업데이트</button>
+        
+        <div class="export-buttons">
+            <button class="export-btn" onclick="exportCard(1)">카드 1</button>
+            <button class="export-btn" onclick="exportCard(2)">카드 2</button>
+            <button class="export-btn" onclick="exportCard(3)">카드 3</button>
+            <button class="export-btn" onclick="exportCard(4)">카드 4</button>
+            <button class="export-btn export-all-btn" onclick="exportAllCards()">전체 다운로드</button>
+        </div>
+        
+        <div class="download-status" id="downloadStatus"></div>
+    </div>
+
+    <div class="container">
+        <!-- Card 1: 상황 설명 -->
+        <div class="card card1" id="card1">
+            <div class="day-header" id="dayHeader1">A Rainy Day in New York 🌧</div>
+            <div class="card-title">상황</div>
+            <div class="situation-box" id="situationBox">
+                Ashleigh와 Gatsby가 교정에서 만나다.
+            </div>
+        </div>
+
+        <!-- Card 2: 상대방 영어 대사 + 한글 번역 -->
+        <div class="card card2" id="card2">
+            <div class="day-header" id="dayHeader2">A Rainy Day in New York 🌧</div>
+            <div class="card-title" id="opponentTitle">Ashleigh</div>
+            <div class="dialogue-box">
+                <div class="english-dialogue" id="englishDialogueText">
+                    I got an interview with Roland Pollard.
+                </div>
+                <div class="korean-translation" id="koreanTranslationText">
+                    Roland Pollard와 인터뷰가 잡혔어
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: 한글 응답 + 생각해보기 -->
+        <div class="card card3" id="card3">
+            <div class="day-header" id="dayHeader3">A Rainy Day in New York 🌧</div>
+            <div class="card-title" id="myTitle">Gatsby</div>
+            <div class="korean-response" id="koreanResponseText">
+                완전 대박! 어떻게 맡았어?
+            </div>
+            <div class="thinking-prompt">
+                (영어로 어떻게?)
+            </div>
+        </div>
+
+        <!-- Card 4: 영어 정답 -->
+        <div class="card card4" id="card4">
+            <div class="day-header" id="dayHeader4">A Rainy Day in New York 🌧</div>
+            <div class="card-title">정답</div>
+            <div class="answer-box">
+                <div class="answer-label">✅ 정답:</div>
+                <div class="answer-text" id="englishAnswerText">
+                    <span id="myNameInAnswer">Gatsby</span>: Oh my gosh, that is amazing. How did you land that?
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 하단 캡션 콘텐츠 프리뷰 -->
+    <div class="caption-section">
+        <div class="caption-title">📌 하단 캡션용 콘텐츠</div>
+        <div id="captionContent">
+            <div class="expression-item">
+                <strong>• "Oh my gosh"</strong> → 놀랐을 때, "세상에!", "헐"
+            </div>
+            <div class="expression-item">
+                <strong>• "How did you land that?"</strong> → (기회를) 어떻게 따냈어?<br>
+                &nbsp;&nbsp;◦ land a job = 직업을 따내다<br>
+                &nbsp;&nbsp;◦ land an interview = 면접 기회를 얻다
+            </div>
+            <div style="margin-top: 15px;">
+                <strong>💡 비슷한 예문:</strong><br>
+                • I can't believe you landed the lead role!<br>
+                • How did you land such an amazing internship?
+            </div>
+            <div style="margin-top: 15px;">
+                <strong>🎯 오늘의 미션:</strong><br>
+                → "land"를 써서 네가 따낸 기회를 댓글로 남겨보세요!<br>
+                (예: I landed a great project at work.)
+            </div>
+            <div style="margin-top: 15px; color: #007bff;">
+                #DailyEnglish #MovieEnglish #ARainyDayInNewYork #EnglishChallenge
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // 이미지 업로드 처리 함수
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // 이미지 파일인지 확인
+            if (!file.type.startsWith('image/')) {
+                alert('이미지 파일만 업로드 가능합니다.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageUrl = e.target.result;
+                setCardBackground(imageUrl);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 카드에 배경 이미지 설정 (모든 카드에 적용)
+        function setCardBackground(imageUrl) {
+            for(let i = 1; i <= 4; i++) {
+                const card = document.getElementById(`card${i}`);
+                card.style.backgroundImage = `url(${imageUrl})`;
+                card.classList.add('with-background');
+            }
+            
+            showStatus('배경 이미지가 모든 카드에 설정되었습니다!', 'success');
+        }
+
+        // 배경 이미지 제거 (모든 카드에서)
+        function removeBackground() {
+            for(let i = 1; i <= 4; i++) {
+                const card = document.getElementById(`card${i}`);
+                card.style.backgroundImage = '';
+                card.classList.remove('with-background');
+            }
+            
+            // 파일 입력 초기화
+            document.getElementById('backgroundImage').value = '';
+            
+            showStatus('모든 카드의 배경 이미지가 제거되었습니다.', 'success');
+        }
+
+        function updateCards() {
+            const dayNum = document.getElementById('dayNumber').value;
+            const movieTitle = document.getElementById('movieTitle').value;
+            const situation = document.getElementById('situationText').value;
+            const opponentName = document.getElementById('opponentName').value;
+            const englishDialogue = document.getElementById('englishDialogue').value;
+            const koreanTranslation = document.getElementById('koreanTranslation').value;
+            const myName = document.getElementById('myName').value;
+            const koreanResponse = document.getElementById('koreanResponse').value;
+            const englishAnswer = document.getElementById('englishAnswer').value;
+
+            // 헤더를 'Day X of 영화제목' 형식으로 업데이트
+            const movieHeader = `Day${dayNum} of ${movieTitle} 🎬`;
+            for(let i = 1; i <= 4; i++) {
+                document.getElementById(`dayHeader${i}`).textContent = movieHeader;
+            }
+
+            // 각 카드 내용 업데이트
+            if(situation) {
+                document.getElementById('situationBox').textContent = situation;
+            }
+
+            if(opponentName) {
+                document.getElementById('opponentTitle').textContent = opponentName;
+            }
+
+            if(englishDialogue) {
+                document.getElementById('englishDialogueText').textContent = englishDialogue;
+            }
+
+            if(koreanTranslation) {
+                document.getElementById('koreanTranslationText').textContent = koreanTranslation;
+            }
+
+            if(myName) {
+                document.getElementById('myTitle').textContent = myName;
+                document.getElementById('myNameInAnswer').textContent = myName;
+            }
+
+            if(koreanResponse) {
+                document.getElementById('koreanResponseText').textContent = koreanResponse;
+            }
+
+            if(englishAnswer) {
+                const answerWithName = englishAnswer.includes(':') ? englishAnswer : `${myName}: ${englishAnswer}`;
+                document.getElementById('englishAnswerText').innerHTML = answerWithName;
+            }
+        }
+
+        // 상태 메시지 표시 함수
+        function showStatus(message, type = 'processing') {
+            const status = document.getElementById('downloadStatus');
+            status.textContent = message;
+            status.className = `download-status ${type}`;
+            status.style.display = 'block';
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // 개별 카드 export 함수
+        async function exportCard(cardNumber) {
+            const card = document.getElementById(`card${cardNumber}`);
+            const movieTitle = document.getElementById('movieTitle').value || 'Movie';
+            const dayNum = document.getElementById('dayNumber').value;
+
+            showStatus(`카드 ${cardNumber} 생성 중...`, 'processing');
+
+            try {
+                // 원본 카드의 현재 스타일 정보 수집
+                const cardRect = card.getBoundingClientRect();
+                const cardStyles = window.getComputedStyle(card);
+                const hasBackground = card.classList.contains('with-background');
+                const backgroundImage = card.style.backgroundImage;
+                
+                // 페이지 렌더링 완료 대기
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // 매우 단순하고 직접적인 옵션으로 설정
+                const options = {
+                    width: 400,
+                    height: 400,
+                    scale: 2,
+                    backgroundColor: null,
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: true,
+                    removeContainer: false,
+                    foreignObjectRendering: false,
+                    imageTimeout: 30000,
+                    onclone: function(clonedDoc, element) {
+                        console.log('Starting clone process for card', cardNumber);
+                        
+                        // 클론된 카드 찾기
+                        const clonedCard = clonedDoc.getElementById(`card${cardNumber}`);
+                        if (!clonedCard) {
+                            console.error('Cloned card not found');
+                            return;
+                        }
+
+                        // 원본 카드에서 배경 이미지 정보 가져오기
+                        const originalCard = document.getElementById(`card${cardNumber}`);
+                        const originalBgImage = originalCard.style.backgroundImage;
+                        
+                        console.log('Original background image:', originalBgImage);
+                        console.log('Has background class:', hasBackground);
+
+                        // 기본 카드 스타일 강제 적용
+                        clonedCard.style.cssText = `
+                            width: 400px !important;
+                            height: 400px !important;
+                            border-radius: 20px !important;
+                            display: flex !important;
+                            flex-direction: column !important;
+                            justify-content: center !important;
+                            align-items: center !important;
+                            text-align: center !important;
+                            padding: 30px !important;
+                            position: relative !important;
+                            overflow: hidden !important;
+                            box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+                        `;
+
+                        // 배경 설정
+                        if (hasBackground && originalBgImage && originalBgImage !== 'none') {
+                            // 배경 이미지가 있는 경우
+                            const gradients = [
+                                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+                            ];
+                            
+                            clonedCard.style.background = `${originalBgImage}, ${gradients[cardNumber - 1]}`;
+                            clonedCard.style.backgroundSize = 'cover';
+                            clonedCard.style.backgroundPosition = 'center';
+                            clonedCard.style.backgroundRepeat = 'no-repeat';
+                            
+                            console.log('Applied background:', clonedCard.style.background);
+                        } else {
+                            // 기본 그라데이션만
+                            const gradients = [
+                                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+                            ];
+                            clonedCard.style.background = gradients[cardNumber - 1];
+                        }
+
+                        // 배경 오버레이 추가 (배경 이미지가 있는 경우)
+                        if (hasBackground) {
+                            const overlay = clonedDoc.createElement('div');
+                            overlay.style.cssText = `
+                                position: absolute !important;
+                                top: 0 !important;
+                                left: 0 !important;
+                                right: 0 !important;
+                                bottom: 0 !important;
+                                background: ${cardNumber === 1 ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.6)'} !important;
+                                border-radius: 20px !important;
+                                z-index: 1 !important;
+                                pointer-events: none !important;
+                            `;
+                            clonedCard.appendChild(overlay);
+                        }
+
+                        // day-header 스타일 강제 적용
+                        const dayHeader = clonedCard.querySelector('.day-header');
+                        if (dayHeader) {
+                            dayHeader.style.cssText = `
+                                position: absolute !important;
+                                top: 20px !important;
+                                left: 20px !important;
+                                right: 20px !important;
+                                transform: none !important;
+                                color: white !important;
+                                font-size: 16px !important;
+                                font-weight: bold !important;
+                                text-shadow: 0 2px 8px rgba(0,0,0,0.8) !important;
+                                z-index: 100 !important;
+                                text-align: center !important;
+                                white-space: nowrap !important;
+                                overflow: visible !important;
+                                text-overflow: clip !important;
+                                width: auto !important;
+                                max-width: none !important;
+                                margin: 0 !important;
+                                padding: 0 !important;
+                            `;
+                            console.log('Day header text:', dayHeader.textContent);
+                        }
+
+                        // 다른 모든 텍스트 요소들 z-index 조정
+                        const textElements = clonedCard.querySelectorAll('.card-title, .situation-box, .dialogue-box, .korean-response, .thinking-prompt, .answer-box');
+                        textElements.forEach(el => {
+                            el.style.position = 'relative';
+                            el.style.zIndex = '10';
+                            el.style.textShadow = '0 2px 8px rgba(0,0,0,0.8)';
+                        });
+
+                        // situation-box 스타일
+                        const situationBox = clonedCard.querySelector('.situation-box');
+                        if (situationBox) {
+                            situationBox.style.background = 'rgba(255,255,255,0.25)';
+                            situationBox.style.borderRadius = '15px';
+                            situationBox.style.padding = '20px';
+                        }
+
+                        // dialogue-box 스타일
+                        const dialogueBox = clonedCard.querySelector('.dialogue-box');
+                        if (dialogueBox) {
+                            dialogueBox.style.background = 'rgba(255,255,255,0.3)';
+                            dialogueBox.style.borderRadius = '15px';
+                            dialogueBox.style.padding = '25px';
+                            dialogueBox.style.marginBottom = '15px';
+                        }
+
+                        // thinking-prompt 스타일
+                        const thinkingPrompt = clonedCard.querySelector('.thinking-prompt');
+                        if (thinkingPrompt) {
+                            thinkingPrompt.style.background = 'rgba(255,255,255,0.2)';
+                            thinkingPrompt.style.borderRadius = '10px';
+                            thinkingPrompt.style.padding = '15px';
+                        }
+
+                        // answer-box 스타일
+                        const answerBox = clonedCard.querySelector('.answer-box');
+                        if (answerBox) {
+                            answerBox.style.background = 'rgba(255,255,255,0.3)';
+                            answerBox.style.borderRadius = '15px';
+                            answerBox.style.padding = '25px';
+                        }
+
+                        console.log('Clone styling completed');
+                    }
+                };
+
+                console.log('Starting html2canvas with card:', cardNumber);
+                const canvas = await html2canvas(card, options);
+                console.log('html2canvas completed, canvas size:', canvas.width, 'x', canvas.height);
+
+                if (!canvas || canvas.width === 0 || canvas.height === 0) {
+                    throw new Error('Canvas generation failed - empty canvas');
+                }
+
+                canvas.toBlob(function(blob) {
+                    if (!blob) {
+                        showStatus('이미지 생성에 실패했습니다.', 'error');
+                        return;
+                    }
+                    
+                    console.log('Blob created, size:', blob.size);
+                    
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${movieTitle}_Day${dayNum}_Card${cardNumber}.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                    
+                    showStatus(`카드 ${cardNumber} 다운로드 완료!`, 'success');
+                }, 'image/png', 1.0);
+
+            } catch (error) {
+                console.error('Export failed:', error);
+                showStatus(`다운로드 중 오류가 발생했습니다: ${error.message}`, 'error');
+            }
+        }
+
+        // 전체 카드 export 함수
+        async function exportAllCards() {
+            showStatus('전체 카드 생성 중...', 'processing');
+            
+            for (let i = 1; i <= 4; i++) {
+                await new Promise(resolve => {
+                    setTimeout(async () => {
+                        await exportCard(i);
+                        resolve();
+                    }, i * 1000);
+                });
+            }
+            
+            showStatus('전체 카드 다운로드 완료!', 'success');
+        }
+
+        // 페이지 로드 시 초기 데이터 설정
+        window.addEventListener('load', function() {
+            // 기본 데이터 설정
+            document.getElementById('situationText').value = 'Ashleigh와 Gatsby가 교정에서 만나다.';
+            document.getElementById('englishDialogue').value = 'I got an interview with Roland Pollard.';
+            document.getElementById('koreanTranslation').value = 'Roland Pollard와 인터뷰가 잡혔어';
+            document.getElementById('koreanResponse').value = '완전 대박! 어떻게 맡았어?';
+            document.getElementById('englishAnswer').value = 'Oh my gosh, that is amazing. How did you land that?';
+            
+            // 초기 카드 업데이트
+            updateCards();
+        });
+    </script>
+</body>
+</html>
